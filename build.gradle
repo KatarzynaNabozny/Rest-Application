@@ -2,6 +2,13 @@ plugins {
 	id 'org.springframework.boot' version '2.6.2'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id 'war'
+
+}
+
+apply plugin: 'java'
+tasks.withType(JavaCompile) {
+	options.compilerArgs.addAll(['--release', '8'])
 }
 
 group = 'com.crud'
@@ -22,16 +29,16 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.6.3'
 	implementation 'org.springframework.boot:spring-boot-starter-validation:2.6.3'
 	implementation 'org.springframework.boot:spring-boot-starter-web:2.6.3'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test:2.6.3'
-
+	testImplementation ('org.springframework.boot:spring-boot-starter-test:2.6.3'){
+             exclude group: 'org.junit.vintage', module:'junit-vintage-engine'}
 	compileOnly 'org.projectlombok:lombok:1.18.22'
 	annotationProcessor 'org.projectlombok:lombok:1.18.22'
 
 	testCompileOnly 'org.projectlombok:lombok:1.18.22'
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
-	// https://mvnrepository.com/artifact/mysql/mysql-connector-java
 	implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.20'
 
+	providedRuntime'org.springframework.boot:spring-boot-starter-tomcat'
 }
 
 test {

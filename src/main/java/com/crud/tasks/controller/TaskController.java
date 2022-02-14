@@ -14,7 +14,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/v1/tasks")
+@RequestMapping("/v1/task")
 @RequiredArgsConstructor
 public class TaskController {
 
@@ -23,7 +23,7 @@ public class TaskController {
     //private final String taskId;
 
 
-    @GetMapping
+    @GetMapping(value = "/getTasks")
     public ResponseEntity <List<TaskDto>> getTasks() {
         List<Task> tasks = service.getAllTasks();
         return ResponseEntity.ok( taskMapper.mapToTaskDtoList(tasks));
