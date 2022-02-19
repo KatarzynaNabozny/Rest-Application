@@ -14,7 +14,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/v1/task")
+@RequestMapping("/v1/tasks")
 @RequiredArgsConstructor
 public class TaskController {
 
@@ -23,7 +23,7 @@ public class TaskController {
     //private final String taskId;
 
 
-    @GetMapping(value = "/getTasks")
+    @GetMapping
     public ResponseEntity <List<TaskDto>> getTasks() {
         List<Task> tasks = service.getAllTasks();
         return ResponseEntity.ok( taskMapper.mapToTaskDtoList(tasks));
@@ -39,7 +39,7 @@ public class TaskController {
   //      return ResponseEntity.ok(new TaskDto(1L, "Edited test title", "Test content"));
   //  }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/createTask", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity <Void> createTask(@RequestBody TaskDto taskDto) {
         Task task = taskMapper.mapToTask(taskDto);
         service.saveTask(task);
