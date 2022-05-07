@@ -38,6 +38,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	testImplementation ('org.springframework.boot:spring-boot-starter-test:2.6.3'){
              exclude group: 'org.junit.vintage', module:'junit-vintage-engine'}
+	testImplementation'com.google.code.gson:gson'
 	compileOnly 'org.projectlombok:lombok:1.18.22'
 	annotationProcessor 'org.projectlombok:lombok:1.18.22'
 	testCompileOnly 'org.projectlombok:lombok:1.18.22'
