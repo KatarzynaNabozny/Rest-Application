@@ -16,7 +16,7 @@ import javax.persistence.Id;
 public class Task {
     @Id
     @GeneratedValue
-    private Long id;
+    private Long taskId;
     @Column(name = "name")
     private String title;
     @Column(name = "description")

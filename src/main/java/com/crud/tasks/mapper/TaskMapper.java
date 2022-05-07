@@ -12,7 +12,7 @@ public class TaskMapper {
 
     public Task mapToTask(final TaskDto taskDto) {
         return new Task(
-                taskDto.getId(),
+                taskDto.getTaskId(),
                 taskDto.getTitle(),
                 taskDto.getContent()
         );
@@ -20,7 +20,7 @@ public class TaskMapper {
 
     public TaskDto mapToTaskDto(final Task task) {
         return new TaskDto(
-                task.getId(),
+                task.getTaskId(),
                 task.getTitle(),
                 task.getContent()
         );

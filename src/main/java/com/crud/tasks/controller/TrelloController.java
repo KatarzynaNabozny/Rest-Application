@@ -16,16 +16,16 @@ import java.util.List;
 @CrossOrigin("*")
 public class TrelloController {
 
-    private final TrelloFacadeS trelloFacade;
+    private final TrelloFacadeS trelloFacadeS;
 
     @GetMapping("boards")
     public ResponseEntity<List<TrelloBoardDto>> getTrelloBoards() {
-        return ResponseEntity.ok(trelloFacade.fetchTrelloBoards());
+        return ResponseEntity.ok(trelloFacadeS.fetchTrelloBoards());
     }
 
     @PostMapping("cards")
     public ResponseEntity<CreatedTrelloCardDto> createTrelloCard(@RequestBody TrelloCardDto trelloCardDto) {
-        return ResponseEntity.ok(trelloFacade.createTrelloCard(trelloCardDto));
+        return ResponseEntity.ok(trelloFacadeS.createTrelloCard(trelloCardDto));
     }
 }
 

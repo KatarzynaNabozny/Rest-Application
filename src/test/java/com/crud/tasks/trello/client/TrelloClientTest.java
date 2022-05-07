@@ -1,8 +1,6 @@
 package com.crud.tasks.trello.client;
 
-import com.crud.tasks.domain.CreatedTrelloCardDto;
-import com.crud.tasks.domain.TrelloBoardDto;
-import com.crud.tasks.domain.TrelloCardDto;
+import com.crud.tasks.domain.*;
 import com.crud.tasks.trello.config.TrelloConfig;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -100,6 +98,33 @@ class TrelloClientTest {
 
         //Then
         assertEquals(0, fetchedTrelloBoards.size());
+    }
+
+    @Test
+    public void shouldCreateNewCard() throws URISyntaxException {
+        // Given
+        when(trelloConfig.getTrelloApiEndpoint()).thenReturn("https://test.com");
+        when(trelloConfig.getTrelloAppKey()).thenReturn("test");
+        when(trelloConfig.getTrelloToken()).thenReturn("test");
+
+        TrelloCardDto trelloCardDto = new TrelloCardDto("testName", "descr", "top", "1111");
+        URI uri = new URI("https://test.com/cards?key=test&token=test&name=testName&desc=descr&pos=top&idList=1111");
+
+        Trello trello = new Trello(3, 3);
+        AttachmentsByType attachments = new AttachmentsByType(trello);
+        Badges badges = new Badges(5, attachments);
+        CreatedTrelloCardDto card = new CreatedTrelloCardDto("1111", "testName", "https://test.com", badges);
+
+        when(restTemplate.postForObject(uri, null, CreatedTrelloCardDto.class)).thenReturn(card);
+        // When
+        CreatedTrelloCardDto newCard = trelloClient.createNewCard(trelloCardDto);
+        // Then
+        assertEquals("1111", newCard.getId());
+        assertEquals("testName", newCard.getName());
+        assertEquals("https://test.com", newCard.getShortUrl());
+        assertEquals(5, newCard.getBadges().getVotes());
+        assertEquals(3, newCard.getBadges().getAttachments().getTrello().getCard());
+        assertEquals(3, newCard.getBadges().getAttachments().getTrello().getBoard());
     }
 
 }
