@@ -57,8 +57,6 @@ public class TrelloClient {
                     .collect(Collectors.toList());
         } catch (RestClientException e) {
             LOGGER.error(e.getMessage(), e);
-           // LOGGER.info("Starting my test application!!!");
-           // LOGGER.warn("There is missing field in my configuration!!!");
             return Collections.emptyList();
         }
     }

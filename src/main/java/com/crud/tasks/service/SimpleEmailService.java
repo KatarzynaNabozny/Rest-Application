@@ -30,6 +30,16 @@ public class SimpleEmailService {
         };
     }
 
+    private MimeMessagePreparator createTaskMessage(final Mail mail) {
+        return mimeMessage -> {
+            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+            messageHelper.setTo(mail.getMailTo());
+            messageHelper.setSubject(mail.getSubject());
+            messageHelper.setText(mailCreatorService.buildTrelloTaskEmail(mail.getMessage()), true);
+        };
+    }
+
+
     private SimpleMailMessage createMailMessage(final Mail mail) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(mail.getMailTo());
@@ -45,6 +55,16 @@ public class SimpleEmailService {
             log.info("Email has been sent.");
         } catch (MailException e) {
             log.error("Failed to process email sending: " + e.getMessage(), e);
+        }
+    }
+
+    public void sendTaskInfo(final Mail mail) {
+        log.info("TASK INFO - Starting email preparation...");
+        try {
+            javaMailSender.send(createTaskMessage(mail));
+            log.info("TASK INFO - Email has been sent.");
+        } catch (MailException e) {
+            log.error("TASK INFO - Failed to process email sending: " + e.getMessage(), e);
         }
     }
 }
